@@ -126,7 +126,10 @@ class FileUploader
         }
         else {
             if (0 !== strpos($localUrl, 'http')) {
-                $localUrl = $this->getRequest()->getSchemeAndHttpHost() . $localUrl;
+                $currentRequest = $this->getRequest();
+                $context = $this->container->get('router')->getContext();
+                $url = !$currentRequest ? $context->getScheme() .'://'. $context->getHost() : $currentRequest->getSchemeAndHttpHost();
+                $localUrl = $url . $localUrl;
             }
 
             return $localUrl;
