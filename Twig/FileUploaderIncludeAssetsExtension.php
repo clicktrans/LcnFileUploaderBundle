@@ -5,7 +5,6 @@ namespace Lcn\FileUploaderBundle\Twig;
 use Lcn\FileUploaderBundle\Services\FileUploader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Twig_Extension;
-use Twig_Function_Method;
 
 class FileUploaderIncludeAssetsExtension extends Twig_Extension
 {
@@ -36,7 +35,7 @@ class FileUploaderIncludeAssetsExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            'lcn_file_uploader_include_assets' => new Twig_Function_Method($this, 'includeAssets'),
+            'lcn_file_uploader_include_assets' => new \Twig_SimpleFunction('includeAssets'),
         );
     }
 
