@@ -27,8 +27,8 @@ class FileUploaderExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            'lcn_file_uploader_get_temp_files' => new \Twig_SimpleFunction('getTempFiles'),
-            'lcn_file_uploader_get_unique_widget_id' => new \Twig_SimpleFunction('getUniqueWidgetId'),
+            'lcn_file_uploader_get_temp_files' => new \Twig_SimpleFunction('lcn_file_uploader_get_temp_files', [$this, 'getTempFiles']),
+            'lcn_file_uploader_get_unique_widget_id' => new \Twig_SimpleFunction('lcn_file_uploader_get_unique_widget_id', [$this, 'getUniqueWidgetId']),
         );
     }
 

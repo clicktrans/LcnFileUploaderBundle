@@ -35,7 +35,7 @@ class FileUploaderIncludeAssetsExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            'lcn_file_uploader_include_assets' => new \Twig_SimpleFunction('includeAssets'),
+            'lcn_file_uploader_include_assets' => new \Twig_SimpleFunction('lcn_file_uploader_include_assets', [$this, 'includeAssets']),
         );
     }
 
