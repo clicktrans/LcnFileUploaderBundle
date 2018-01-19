@@ -352,11 +352,11 @@ class UploadHandler
         $val = (int) trim($val);
         $last = strtolower($val[strlen($val)-1]);
         switch($last) {
-            case 'g':
+            case 'G':
                 $val *= 1024;
-            case 'm':
+            case 'M':
                 $val *= 1024;
-            case 'k':
+            case 'K':
                 $val *= 1024;
         }
         return $this->fix_integer_overflow($val);
