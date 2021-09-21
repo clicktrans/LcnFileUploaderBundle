@@ -76,7 +76,7 @@ class DemoController extends Controller
         if ($request->getMethod() == 'POST') {
             $form->submit($request);
 
-            if ($form->isValid()) {
+            if ($form->isSubmited() && $form->isValid()) {
                 $fileUploader->syncFilesFromTemp($uploadFolderName);
 
                 return $this->redirect($this->generateUrl('lcn_file_uploader_demo_show', array('entityId'  => $entityId)));

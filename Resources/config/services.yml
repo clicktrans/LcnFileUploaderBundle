@@ -58,9 +58,9 @@ parameters:
       max_height: 150
       crop: true
       proxy:
-        enabled: %lcn_file_uploader.image_proxy_enabled%
-        url: %lcn_file_uploader.image_proxy_url%
-        parameters: %lcn_file_uploader.image_proxy_parameters%
+        enabled: '%lcn_file_uploader.image_proxy_enabled%'
+        url: '%lcn_file_uploader.image_proxy_url%'
+        parameters: '%lcn_file_uploader.image_proxy_parameters%'
 
 
     # required: "original" - used to store "original" versions of files (resamples images if needed)
@@ -70,8 +70,8 @@ parameters:
       max_height: 1125
       crop: false
       proxy:
-        enabled: %lcn_file_uploader.image_proxy_enabled%
-        url: %lcn_file_uploader.image_proxy_url%
+        enabled: '%lcn_file_uploader.image_proxy_enabled%'
+        url: '%lcn_file_uploader.image_proxy_url%'
         parameters:
           w: ~max_width~
           h: ~max_height~
@@ -81,7 +81,7 @@ parameters:
 services:
     lcn.file_uploader:
         class: Lcn\FileUploaderBundle\Services\FileUploader
-        scope: prototype
+        public: true
         arguments:
           - file_namers: ['@lcn.file_uploader_file_namer_cache_buster', '@lcn.file_uploader_file_namer_hash']
             file_manager: '@lcn.file_uploader_file_manager'
@@ -97,26 +97,38 @@ services:
             image_file_extension_test_regex: '%lcn_file_uploader.image_file_extension_test_regex%'
             container: '@service_container'
 
+    Lcn\FileUploaderBundle\Services\FileManager: '@lcn.file_uploader_file_manager'
+
     lcn.file_uploader_file_manager:
         class: Lcn\FileUploaderBundle\Services\FileManager
         public: false
+
+    Lcn\FileUploaderBundle\Services\FileNamerSanitize: '@lcn.file_uploader_file_namer_sanitize'
 
     lcn.file_uploader_file_namer_sanitize:
         class: Lcn\FileUploaderBundle\Services\FileNamerSanitize
         public: false
 
+    Lcn\FileUploaderBundle\Services\FileNamerOriginal: '@lcn.file_uploader_file_namer_original'
+
     lcn.file_uploader_file_namer_original:
         class: Lcn\FileUploaderBundle\Services\FileNamerOriginal
         public: false
 
+    Lcn\FileUploaderBundle\Services\FileNamerHash: '@lcn.file_uploader_file_namer_hash'
+
     lcn.file_uploader_file_namer_hash:
         class: Lcn\FileUploaderBundle\Services\FileNamerHash
-        arguments: [%secret%]
+        arguments: ['%secret%']
         public: false
+
+    Lcn\FileUploaderBundle\Services\FileNamerCacheBuster: '@lcn.file_uploader_file_namer_cache_buster'
 
     lcn.file_uploader_file_namer_cache_buster:
         class: Lcn\FileUploaderBundle\Services\FileNamerCacheBuster
         public: false
+
+    Lcn\FileUploaderBundle\Command\CleanupCommand: '@lcn.file_uploader_cleanup_command'
 
     lcn.file_uploader_cleanup_command:
         class: Lcn\FileUploaderBundle\Command\CleanupCommand
@@ -124,11 +136,15 @@ services:
         tags:
             -  { name: console.command }
 
+    Lcn\FileUploaderBundle\Twig\FileUploaderExtension: '@lcn.file_uploader.twig_extension'
+
     lcn.file_uploader.twig_extension:
         class: Lcn\FileUploaderBundle\Twig\FileUploaderExtension
         arguments: ['@service_container']
         tags:
             - { name: twig.extension }
+
+    Lcn\FileUploaderBundle\Twig\FileUploaderIncludeAssetsExtension: '@lcn.file_uploader.include_assets_twig_extension'
 
     lcn.file_uploader.include_assets_twig_extension:
         class: Lcn\FileUploaderBundle\Twig\FileUploaderIncludeAssetsExtension
