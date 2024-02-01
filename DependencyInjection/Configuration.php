@@ -17,8 +17,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('file_uploader');
+        $treeBuilder = new TreeBuilder('file_uploader');
+        $rootNode = $treeBuilder->root();
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
