@@ -110,10 +110,10 @@ class FileUploader
     }
 
     /**
-     * @param array $proxyConfig
+     * @param string|null $size
      * @param string $localUrl
      */
-    private function getAbsoluteUrlForLocalUrl($size = null, $localUrl) {
+    private function getAbsoluteUrlForLocalUrl($size, $localUrl) {
         $proxyConfig = $this->getSizeConfig($size, 'proxy');
         if ($proxyConfig && $proxyConfig['enabled']) {
             $proxyUrl = $proxyConfig['url'];
