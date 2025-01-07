@@ -4,9 +4,10 @@ namespace Lcn\FileUploaderBundle\Twig;
 
 use Lcn\FileUploaderBundle\Services\FileUploader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Twig_Extension;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class FileUploaderExtension extends Twig_Extension
+class FileUploaderExtension extends AbstractExtension
 {
 
     static $widgetCounter = 0;
@@ -27,8 +28,8 @@ class FileUploaderExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            'lcn_file_uploader_get_temp_files' => new \Twig_SimpleFunction('lcn_file_uploader_get_temp_files', [$this, 'getTempFiles']),
-            'lcn_file_uploader_get_unique_widget_id' => new \Twig_SimpleFunction('lcn_file_uploader_get_unique_widget_id', [$this, 'getUniqueWidgetId']),
+            'lcn_file_uploader_get_temp_files' => new TwigFunction('lcn_file_uploader_get_temp_files', [$this, 'getTempFiles']),
+            'lcn_file_uploader_get_unique_widget_id' => new TwigFunction('lcn_file_uploader_get_unique_widget_id', [$this, 'getUniqueWidgetId']),
         );
     }
 
